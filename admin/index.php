@@ -174,78 +174,73 @@
                     <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <div class="menu-item pt-5">
                             <div class="menu-content">
-                                <span class="menu-heading fw-bold text-uppercase fs-7">Danh mục</span>
+                                <span class="menu-heading fw-bold text-uppercase fs-7">Quản lý</span>
                             </div>
                         </div>
-                        <div class="menu menu-column menu-rounded menu-sub-indention menu-active-bg fw-semibold my-auto" id="#kt_aside_menu" data-kt-menu="true">
-                            <div data-kt-menu-trigger="click" class="menu-item here menu-accordion hover show">
-                                <span class="menu-link">
+                        <div class="menu-item">
+                            <a class="menu-link" href="/admin/category">
+                                <span class="menu-icon">
                                     <span class="menu-icon">
-                                        <i class="fa fa-circle text-danger"></i>
+                                        <i class="fa fa-list"></i>
                                     </span>
-                                    <span class="menu-title">Môn A</span>
-                                    <span class="menu-arrow"></span>
                                 </span>
-                                <div class="menu-sub menu-sub-accordion show" style="" kt-hidden-height="248">
-                                    <div class="menu-item">
-                                        <a class="menu-link active" href="/metronic8/demo10/../demo10/dashboard.html">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Default</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-kt-menu-trigger="click" class="menu-item here menu-accordion hover">
-                                <span class="menu-link">
+                                <span class="menu-title">Danh mục</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="/admin">
+                                <span class="menu-icon">
                                     <span class="menu-icon">
-                                        <i class="fa fa-circle text-danger"></i>
+                                        <i class="fa fa-newspaper"></i>
                                     </span>
-                                    <span class="menu-title">Môn B</span>
-                                    <span class="menu-arrow"></span>
                                 </span>
-                                <div class="menu-sub menu-sub-accordion" style="" kt-hidden-height="248">
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="/metronic8/demo10/../demo10/dashboard.html">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Default</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-kt-menu-trigger="click" class="menu-item here menu-accordion hover">
-                                <span class="menu-link">
+                                <span class="menu-title">Bài viết</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="/admin/withdraw">
+                                <span class="menu-icon">
                                     <span class="menu-icon">
-                                        <i class="fa fa-circle text-danger"></i>
+                                        <i class="fa fa-coins"></i>
                                     </span>
-                                    <span class="menu-title">Môn C</span>
-                                    <span class="menu-arrow"></span>
                                 </span>
-                                <div class="menu-sub menu-sub-accordion" style="" kt-hidden-height="248">
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="/metronic8/demo10/../demo10/dashboard.html">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Default</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                                <span class="menu-title">Rút kim cương</span>
+                            </a>
+                        </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link" href="/admin/account">
+                                <span class="menu-icon">
+                                    <span class="menu-icon">
+                                        <i class="fa fa-id-card"></i>
+                                    </span>
+                                </span>
+                                <span class="menu-title">Random Tài Khoản</span>
+                            </a>
+                        </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link" href="/admin/users">
+                                <span class="menu-icon">
+                                    <span class="menu-icon">
+                                        <i class="fa fa-users"></i>
+                                    </span>
+                                </span>
+                                <span class="menu-title">Người dùng</span>
+                            </a>
+                        </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link" href="/admin/settings">
+                                <span class="menu-icon">
+                                    <span class="menu-icon">
+                                        <i class="fa fa-cogs"></i>
+                                    </span>
+                                </span>
+                                <span class="menu-title">Website</span>
+                            </a>
                         </div>
                     </div>
-                </div>
-
-                <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
-                    <a href="login.php" class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100">
-                            <span class="btn-label">
-                                Đăng nhập
-                            </span>
-                        <i class="ki-duotone ki-document btn-icon fs-2 m-0"></i>
-                    </a>
                 </div>
             </div>
         </div>
@@ -261,25 +256,15 @@
                     <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
                         <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
                             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                                    <?php if (!isset($_GET["learnId"])) { ?>
-                                        Hệ Thống E-Learning PHP
-                                    <?php } else { ?>
-                                        Bài 1: Làm quen hệ thống
-                                    <?php } ?>
-                                </h1>
+                                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Trang Thống Kê</h1>
                                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                                     <li class="breadcrumb-item text-muted">
-                                        <a href="/" class="text-muted text-hover-primary">Môn học</a>
+                                        <a href="/" class="text-muted text-hover-primary">Trang Chủ</a>
                                     </li>
                                     <li class="breadcrumb-item">
                                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                                     </li>
-                                    <?php if (!isset($_GET["learnId"])) { ?>
-                                        <li class="breadcrumb-item text-muted">Chưa chọn môn học</li>
-                                    <?php } else { ?>
-                                        <li class="breadcrumb-item text-muted">A</li>
-                                    <?php } ?>
+                                    <li class="breadcrumb-item text-muted">Thống Kê</li>
                                 </ul>
                             </div>
                         </div>
@@ -287,33 +272,38 @@
                     <div id="kt_app_content" class="app-content flex-column-fluid">
                         <div class="app-container">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-4 col-lg-4">
                                     <div class="card card-custom card-stretch gutter-b">
+                                        <div class="card-header align-items-center border-0 mt-4">
+                                            <h3 class="card-title align-items-start flex-column">
+                                                <span class="fw-bold text-dark">Lịch sử tài khoản</span>
+                                            </h3>
+                                        </div>
                                         <div class="card-body pt-4">
-                                            <?php if (!isset($_GET["learnId"])) { ?>
-                                                <h4 class="text-center p-5 text-dark">
-                                                    Vui lòng chọn bài học để tiếp tục...
-                                                </h4>
-                                            <?php } else { ?>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <iframe class="w-100 h-550px embed-responsive-item"
-                                                        src="https://www.youtube.com/embed/NSwgIZPwkiw"
-                                                        title="TOP 30 Nhạc Remix HOT TREND TIKTOK 2023: Lệ Lưu Ly, Body Shaming, Hoa Cỏ Lau, Gió, Call Me"
-                                                        frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowfullscreen>
-                                                    </iframe>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <hr class="border border-2 border-dashed border-gray-500">
-                                                    <h5>Mô tả bài học</h5>
-                                                    <p class="ps-2 text-gray-600">
-                                                        -Thông tin chi tiết gặp Tạ Đăng Khoa =)))
-                                                    </p>
+                                            <div style="max-height: 300px; overflow: hidden; overflow-y: scroll">
+                                                <div class="timeline">
+                                                    <div class="timeline-item align-items-center mb-7">
+                                                        <div class="timeline-line w-40px mt-6 mb-n12"></div>
+                                                        <div class="timeline-icon" style="margin-left: 15px">
+                                                            <i class="fa fa-genderless text-danger icon-xl"></i>
+                                                        </div>
+                                                        <div class="timeline-content m-0">
+                                                            <span class="fw-bold text-dark-75 font-size-lg">21:03 - </span>
+                                                            Đăng nhập với IP: <a href="#" class="text-primary">127.0.0.1</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="timeline-item align-items-center mb-7">
+                                                        <div class="timeline-line w-40px mt-6 mb-n12"></div>
+                                                        <div class="timeline-icon" style="margin-left: 15px">
+                                                            <i class="fa fa-genderless text-danger icon-xl"></i>
+                                                        </div>
+                                                        <div class="timeline-content m-0">
+                                                            <span class="fw-bold text-dark-75 font-size-lg">21:03 - </span>
+                                                            Đăng nhập với IP: <a href="#" class="text-primary">127.0.0.1</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
