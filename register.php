@@ -1,3 +1,13 @@
+<?php
+include "handler/config.php";
+
+/* Kiểm tra xem đã đăng nhập hay chưa */
+if (isset($_SESSION["username"])) {
+    // Đã đăng nhập, chuyển về trang chủ
+    header("location: /");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi" xml:lang="vi">
 <head>
@@ -11,8 +21,6 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link rel="stylesheet" href="assets/plugins/global/plugins.bundle.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/style.bundle.css" type="text/css" />
-    <link rel="stylesheet" href="assets/css/style.custom.css?v=1697465741" type="text/css" />
-    <link rel="stylesheet" href="assets/css/style.avatar.css?v=0.0.1" type="text/css" />
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" rel="stylesheet" type="text/css" />
@@ -37,7 +45,7 @@
                     <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center container-xxl">
                         <div id="kt_app_content" class="app-content flex-row-fluid flex-lg-row-auto justify-content-center">
                             <div class="bg-body d-flex flex-center rounded-4 w-md-600px p-10 mt-0 mt-lg-5 mb-5 mb-lg-0 w-md-400px">
-                                <form class="form w-100" novalidate="novalidate" id="login" method="POST">
+                                <form class="form w-100" novalidate="novalidate" id="register" method="POST">
                                     <div class="text-center mb-11">
                                         <h1 class="text-dark fw-bolder mb-3">Đăng ký</h1>
                                         <div class="text-gray-500 fw-semibold fs-6">Đăng Ký Tài Khoản</div>
@@ -67,6 +75,21 @@
         </div>
     </div>
 
+    <script src="assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="assets/plugins/global/plugins.bundle.js"></script>
+    <script src="assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+    <script src="assets/js/scripts.bundle.js"></script>
+    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="assets/js/widgets.bundle.js"></script>
+    <script src="assets/js/custom/widgets.js"></script>
+    <script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/cleave.min.js" integrity="sha512-SvgzybymTn9KvnNGu0HxXiGoNeOi0TTK7viiG0EGn2Qbeu/NFi3JdWrJs2JHiGA1Lph+dxiDv5F9gDlcgBzjfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
     <script>
         $("#register").on("submit", function(e) {
             e.preventDefault();
@@ -85,7 +108,7 @@
                             confirmButton: "btn btn-primary"
                         }
                     }).then((result) => {
-                        if (data.reload) {
+                        if (data.type == "success") {
                             window.location.reload();
                         }
                     });
@@ -93,13 +116,5 @@
             });
         });
     </script>
-
-    <script src="assets/plugins/global/plugins.bundle.js"></script>
-    <script src="assets/js/scripts.bundle.js"></script>
-    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="assets/js/widgets.bundle.js"></script>
-    <script src="assets/js/luvnove.custom.js?v=<?php echo time();?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
 </body>
 </html>

@@ -1,3 +1,12 @@
+<?php
+include "handler/config.php";
+
+/* Kiểm tra xem đã đăng nhập hay chưa */
+if (isset($_SESSION["username"])) {
+    // Đã đăng nhập, chuyển về trang chủ
+    header("location: /");
+}
+?>
 <!DOCTYPE html>
 <html lang="vi" xml:lang="vi">
 <head>
@@ -63,12 +72,19 @@
         </div>
     </div>
 </div>
+<script src="assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
 <script src="assets/plugins/global/plugins.bundle.js"></script>
+<script src="assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
 <script src="assets/js/scripts.bundle.js"></script>
 <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 <script src="assets/js/widgets.bundle.js"></script>
-<script src="assets/js/luvnove.custom.js?v=<?php echo time();?>"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+<script src="assets/js/custom/widgets.js"></script>
+<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/cleave.min.js" integrity="sha512-SvgzybymTn9KvnNGu0HxXiGoNeOi0TTK7viiG0EGn2Qbeu/NFi3JdWrJs2JHiGA1Lph+dxiDv5F9gDlcgBzjfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
 </html>
