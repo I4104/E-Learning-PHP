@@ -1,17 +1,36 @@
 <?php
-    include "../handler/config.php";
+include "../handler/config.php";
 
-    // Kiểm tra xem người dùng đã đăng nhập hay chưa
-    if (!isset($_SESSION["username"])) {
-        // Chuyển về trang chủ do chưa đăng nhập
-        header("location: ../");
-    }
+// Kiểm tra xem người dùng đã đăng nhập hay chưa
+if (!isset($_SESSION["username"])) {
+    // Chuyển về trang chủ do chưa đăng nhập
+    header("location: ../");
+}
 
-    // Kiểm tra xem người dùng có phải admin không
-    // Biến $users được định nghĩa ở config.php
-    if ($users["user_type"] != "admin") {
-        header("location: ../");
-    }
+// Kiểm tra xem người dùng có phải admin không
+// Biến $users được định nghĩa ở config.php
+if ($users["user_type"] != "admin") {
+    header("location: ../");
+}
+
+// Kiểm tra xem người dùng có nhập ID của danh mục cần xóa không
+if (!isset($_GET["id"]) || $_GET["id"] == "") {
+    // Chuyển người dùng về admin
+    header("location: index.php");
+    return;
+}
+
+// Kiểm tra xem danh mục còn tồn tại hay không
+$get = $conn->query("SELECT * FROM category WHERE id = '{$_GET["id"]}'");
+if ($get->num_rows > 0) {
+    // Nếu còn tồn tại
+} else {
+    // Nếu không còn tồn tại, Chuyển người dùng về admin
+    header("location: index.php");
+    return;
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -235,7 +254,7 @@
                                     <div class="card card-custom card-stretch gutter-b">
                                         <div class="card-header align-items-center border-0 mt-4">
                                             <h3 class="card-title align-items-start flex-column">
-                                                <span class="fw-bold text-dark">Danh sách danh mục</span>
+                                                <span class="fw-bold text-dark">Danh sách bài học</span>
                                             </h3>
                                         </div>
                                         <div class="card-body pt-4 row">
@@ -243,7 +262,8 @@
                                                 <form method="get">
                                                     <div class="input-group">
                                                         <div class="form-outline">
-                                                            <input type="text" placeholder="Tìm kiếm" name="search" class="w-350px form-control" />
+                                                            <input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
+                                                            <input type="text" placeholder="Tìm kiếm" name="search" value="<?php echo $_GET["search"] ?? ""; ?>" class="w-350px form-control" />
                                                         </div>
                                                         <button class="btn btn-primary">
                                                             <i class="fas fa-search"></i>
@@ -252,56 +272,51 @@
                                                 </form>
                                             </div>
                                             <div class="col-md-6 text-end">
-                                                <a href="add/new_category.php" class="btn btn-success btn-sm">Thêm mới</a>
+                                                <a href="add/new_course.php?id=<?php echo $_GET["id"]; ?>" class="btn btn-success btn-sm">Thêm mới</a>
                                             </div>
                                             <div class="col-md-12">
                                                 <table class="table table-row-bordered text-center">
                                                     <thead>
-                                                        <th>ID</th>
-                                                        <th>Tên danh mục</th>
-                                                        <th>Số bài học</th>
-                                                        <th>Ngày đăng</th>
-                                                        <th>Danh sách bài học</th>
-                                                        <th>Sửa/Xóa</th>
+                                                    <th>ID</th>
+                                                    <th>Tên bài học</th>
+                                                    <th>Số lượt xem</th>
+                                                    <th>Người đăng</th>
+                                                    <th>Ngày đăng</th>
+                                                    <th>Sửa/Xóa</th>
                                                     </thead>
                                                     <tbody>
                                                     <?php
                                                         if (isset($_GET["search"]) && $_GET["search"] != "") {
-                                                            $search = "WHERE id LIKE '%{$_GET["search"]}%' OR title LIKE '%{$_GET["search"]}%'";
+                                                            $search = "AND (id LIKE '%{$_GET["search"]}%' OR name LIKE '%{$_GET["search"]}%' OR uploaded_by LIKE '%{$_GET["search"]}%')";
                                                         } else {
                                                             $search = "";
                                                         }
                                                         // Biến conn được định nghĩa trong config.php
-                                                        $get = $conn->query("SELECT * FROM category {$search}");
+                                                        $get = $conn->query("SELECT * FROM course WHERE category_id = '{$_GET["id"]}' {$search}");
                                                         // Kiểm tra xem có tồn tại dữ liệu hay ko
                                                         if ($get->num_rows > 0) {
                                                             // Duyệt qua toàn bộ các dữ liệu được lấy từ SQL
                                                             while ($row = $get->fetch_array()) {
-                                                                // Lấy số lượng bài học
-                                                                $course_count = $conn->query("SELECT * FROM course WHERE category_id = '{$row["id"]}'")->num_rows;
+                                                                // Lấy số lượng người đã học
+                                                                $viewer_count = $conn->query("SELECT * FROM history WHERE course_id = '{$row["id"]}'")->num_rows;
                                                                 ?>
                                                                 <tr>
                                                                     <td><?php echo $row["id"]; ?></td>
-                                                                    <td><?php echo $row["title"]; ?></td>
-                                                                    <td><?php echo number_format($course_count); ?></td>
+                                                                    <td><?php echo $row["name"]; ?></td>
+                                                                    <td><?php echo number_format($viewer_count); ?></td>
+                                                                    <td><?php echo $row["uploaded_by"]; ?></td>
                                                                     <td><?php echo $row["created_at"]; ?></td>
                                                                     <td>
-                                                                        <a href="course.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-icon btn-sm btn-circle">
-                                                                            <i class="fa fa-list"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="edit/edit_category.php?id=<?php echo $row["id"]; ?>" class="btn btn-warning btn-icon btn-sm btn-circle">
+                                                                        <a href="edit/edit_course.php?id=<?php echo $row["id"]; ?>" class="btn btn-warning btn-icon btn-sm btn-circle">
                                                                             <i class="fa fa-edit"></i>
                                                                         </a>
-                                                                        <a href="delete/delete_category.php?id=<?php echo $row["id"]; ?>" class="btn btn-danger btn-icon btn-sm btn-circle">
+                                                                        <a href="delete/delete_course.php?id=<?php echo $row["id"]; ?>" class="btn btn-danger btn-icon btn-sm btn-circle">
                                                                             <i class="fa fa-trash"></i>
                                                                         </a>
                                                                     </td>
                                                                 </tr>
                                                                 <?php
                                                             }
-
                                                         }
                                                     ?>
                                                     </tbody>

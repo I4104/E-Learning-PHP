@@ -85,6 +85,31 @@ if (isset($_SESSION["username"])) {
 <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/cleave.min.js" integrity="sha512-SvgzybymTn9KvnNGu0HxXiGoNeOi0TTK7viiG0EGn2Qbeu/NFi3JdWrJs2JHiGA1Lph+dxiDv5F9gDlcgBzjfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script>
+    $("#login").on("submit", function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "handler/login.php",
+            type: "POST",
+            data: $(this).serialize(),
+            dataType: "JSON",
+            success: (data) => {
+                Swal.fire({
+                    text: data.message,
+                    icon: data.type,
+                    buttonsStyling: true,
+                    confirmButtonText: "OKE",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
+                    }
+                }).then((result) => {
+                    if (data.type == "success") {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>

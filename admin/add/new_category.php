@@ -1,17 +1,17 @@
 <?php
-    include "../handler/config.php";
+include "../handler/config.php";
 
-    // Kiểm tra xem người dùng đã đăng nhập hay chưa
-    if (!isset($_SESSION["username"])) {
-        // Chuyển về trang chủ do chưa đăng nhập
-        header("location: ../");
-    }
+// Kiểm tra xem người dùng đã đăng nhập hay chưa
+if (!isset($_SESSION["username"])) {
+    // Chuyển về trang chủ do chưa đăng nhập
+    header("location: ../");
+}
 
-    // Kiểm tra xem người dùng có phải admin không
-    // Biến $users được định nghĩa ở config.php
-    if ($users["user_type"] != "admin") {
-        header("location: ../");
-    }
+// Kiểm tra xem người dùng có phải admin không
+// Biến $users được định nghĩa ở config.php
+if ($users["user_type"] != "admin") {
+    header("location: ../");
+}
 ?>
 
 <!DOCTYPE html>
@@ -195,7 +195,7 @@
             </div>
             <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
                 <?php if (isset($_SESSION["username"])) {?>
-                    <a href="../handler/logout.php" class="btn btn-flex flex-center btn-danger overflow-hidden text-nowrap px-0 h-40px w-100">
+                    <a href="../../handler/logout.php" class="btn btn-flex flex-center btn-danger overflow-hidden text-nowrap px-0 h-40px w-100">
                         <span class="btn-label">
                             Đăng xuất
                         </span>
@@ -235,79 +235,26 @@
                                     <div class="card card-custom card-stretch gutter-b">
                                         <div class="card-header align-items-center border-0 mt-4">
                                             <h3 class="card-title align-items-start flex-column">
-                                                <span class="fw-bold text-dark">Danh sách danh mục</span>
+                                                <span class="fw-bold text-dark">Thêm danh mục mới</span>
                                             </h3>
                                         </div>
-                                        <div class="card-body pt-4 row">
-                                            <div class="col-md-6 mb-10">
-                                                <form method="get">
-                                                    <div class="input-group">
-                                                        <div class="form-outline">
-                                                            <input type="text" placeholder="Tìm kiếm" name="search" class="w-350px form-control" />
-                                                        </div>
-                                                        <button class="btn btn-primary">
-                                                            <i class="fas fa-search"></i>
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                        <form id="add" class="card-body pt-4 row">
+                                            <div class="col-md-12 mb-5">
+                                                <div class="form-group">
+                                                    <label>Tên danh mục</label>
+                                                    <input type="text" class="form-control" name="title" placeholder="Tên danh mục" required>
+                                                </div>
                                             </div>
-                                            <div class="col-md-6 text-end">
-                                                <a href="add/new_category.php" class="btn btn-success btn-sm">Thêm mới</a>
+                                            <div class="col-md-12 mb-8">
+                                                <div class="form-group">
+                                                    <label>Hình ảnh</label>
+                                                    <input type="url" class="form-control" name="image" placeholder="Đường dẫn hình ảnh" required>
+                                                </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <table class="table table-row-bordered text-center">
-                                                    <thead>
-                                                        <th>ID</th>
-                                                        <th>Tên danh mục</th>
-                                                        <th>Số bài học</th>
-                                                        <th>Ngày đăng</th>
-                                                        <th>Danh sách bài học</th>
-                                                        <th>Sửa/Xóa</th>
-                                                    </thead>
-                                                    <tbody>
-                                                    <?php
-                                                        if (isset($_GET["search"]) && $_GET["search"] != "") {
-                                                            $search = "WHERE id LIKE '%{$_GET["search"]}%' OR title LIKE '%{$_GET["search"]}%'";
-                                                        } else {
-                                                            $search = "";
-                                                        }
-                                                        // Biến conn được định nghĩa trong config.php
-                                                        $get = $conn->query("SELECT * FROM category {$search}");
-                                                        // Kiểm tra xem có tồn tại dữ liệu hay ko
-                                                        if ($get->num_rows > 0) {
-                                                            // Duyệt qua toàn bộ các dữ liệu được lấy từ SQL
-                                                            while ($row = $get->fetch_array()) {
-                                                                // Lấy số lượng bài học
-                                                                $course_count = $conn->query("SELECT * FROM course WHERE category_id = '{$row["id"]}'")->num_rows;
-                                                                ?>
-                                                                <tr>
-                                                                    <td><?php echo $row["id"]; ?></td>
-                                                                    <td><?php echo $row["title"]; ?></td>
-                                                                    <td><?php echo number_format($course_count); ?></td>
-                                                                    <td><?php echo $row["created_at"]; ?></td>
-                                                                    <td>
-                                                                        <a href="course.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-icon btn-sm btn-circle">
-                                                                            <i class="fa fa-list"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="edit/edit_category.php?id=<?php echo $row["id"]; ?>" class="btn btn-warning btn-icon btn-sm btn-circle">
-                                                                            <i class="fa fa-edit"></i>
-                                                                        </a>
-                                                                        <a href="delete/delete_category.php?id=<?php echo $row["id"]; ?>" class="btn btn-danger btn-icon btn-sm btn-circle">
-                                                                            <i class="fa fa-trash"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                                <?php
-                                                            }
-
-                                                        }
-                                                    ?>
-                                                    </tbody>
-                                                </table>
+                                            <div class="col-md-12 text-end">
+                                                <button class="btn btn-success" type="submit">Lưu lại</button>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -340,5 +287,33 @@
         <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/cleave.min.js" integrity="sha512-SvgzybymTn9KvnNGu0HxXiGoNeOi0TTK7viiG0EGn2Qbeu/NFi3JdWrJs2JHiGA1Lph+dxiDv5F9gDlcgBzjfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script>
+            $("#add").on("submit", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "../handler/admin/add_category.php",
+                    type: "POST",
+                    data: $(this).serialize(),
+                    dataType: "JSON",
+                    success: (data) => {
+                        Swal.fire({
+                            text: data.message,
+                            icon: data.type,
+                            buttonsStyling: true,
+                            confirmButtonText: "OKE",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        }).then((result) => {
+                            if (data.type == "success") {
+                                window.history.go(-1);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
 </body>
 </html>

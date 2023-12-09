@@ -51,13 +51,29 @@ if (isset($_SESSION["username"])) {
                                         <div class="text-gray-500 fw-semibold fs-6">Đăng Ký Tài Khoản</div>
                                     </div>
                                     <div class="fv-row mb-8">
-                                        <input type="text" placeholder="Tài khoản" name="username" class="form-control bg-transparent">
+                                        <input type="text" placeholder="Tên của bạn" name="fullname" class="form-control bg-transparent" required>
                                     </div>
                                     <div class="fv-row mb-8">
-                                        <input type="password" placeholder="Mật khẩu" name="password" class="form-control bg-transparent">
+                                        <input type="text" placeholder="Tài khoản" name="username" class="form-control bg-transparent" required>
                                     </div>
                                     <div class="fv-row mb-8">
-                                        <input type="password" placeholder="Nhập lại mật khẩu" name="repassword" class="form-control bg-transparent">
+                                        <input type="password" placeholder="Mật khẩu" name="password" class="form-control bg-transparent" required>
+                                    </div>
+                                    <div class="fv-row mb-8">
+                                        <input type="password" placeholder="Nhập lại mật khẩu" name="repassword" class="form-control bg-transparent" required>
+                                    </div>
+                                    <div class="fv-row mb-8">
+                                        <input type="email" placeholder="Email" name="email" class="form-control bg-transparent" required>
+                                    </div>
+                                    <div class="fv-row mb-8">
+                                        <input type="number" placeholder="Số điện thoại" name="phone" class="form-control bg-transparent" required>
+                                    </div>
+                                    <div class="fv-row mb-8">
+                                        <select class="form-control form-control-solid" name="gender" required>
+                                            <option selected>Giới tính</option>
+                                            <option value="male">Nam</option>
+                                            <option value="female">Nữ</option>
+                                        </select>
                                     </div>
                                     <div class="d-grid mb-10">
                                         <button type="submit" class="btn btn-success">

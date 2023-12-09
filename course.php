@@ -15,6 +15,19 @@ if (!isset($_GET["category"])) {
             $course = $conn->query("SELECT * FROM course WHERE category_id = '{$_GET["category"]}' AND id = '{$_GET["courseId"]}'");
             if ($course->num_rows > 0) {
                 $course = $course->fetch_array();
+
+                // Kiểm tra xem bài học này đã được xem chưa, nếu chưa xem thì thêm vào lịch sử
+                // Biến users được tạo trong config.php
+                if (isset($_SESSION["username"])) {
+                    $seen = $conn->query("SELECT * FROM history WHERE user_id = '{$users["id"]}' AND course_id = '{$course["id"]}'");
+                    if ($seen->num_rows > 0) {
+                        // Nếu người dùng đã xem
+
+                    } else {
+                        // Nếu người dùng chưa xem
+                        $conn->query("INSERT INTO history SET user_id = '{$users["id"]}', course_id = '{$course["id"]}'");
+                    }
+                }
             } else {
                 // Chuyển về trang chủ nếu bài học không tồn tại
                 header("location: /");
@@ -161,7 +174,13 @@ if (!isset($_GET["category"])) {
         <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
             <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
                 <a href="/" class="text-danger fs-5 fw-bold">
-                    <?php echo "Xin chào <span class='text-success'>".$_SESSION["username"]."</span>" ?? "Chưa đăng nhập"; ?>
+                    <?php
+                    if (isset($_SESSION["username"])) {
+                        echo "Xin chào <span class='text-success'>".$_SESSION["username"]."</span>";
+                    } else {
+                        echo "Chưa đăng nhập";
+                    }
+                    ?>
                 </a>
                 <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
                     <span class="svg-icon svg-icon-2 rotate-180">
@@ -184,13 +203,22 @@ if (!isset($_GET["category"])) {
                             <?php
                             // Kiểm tra xem có tồn tại dữ liệu bài học hay không
                             if ($get->num_rows > 0) {
-                                // Duyệt qua toàn bộ dữ liệu của bảng category
+                                // Duyệt qua toàn bộ dữ liệu của bảng 'course'
                                 while ($lession = $get->fetch_array()) {
+                                    if (isset($_SESSION["username"])) {
+                                        // Kiểm tra xem bài học đã tồn tại trong bảng 'history' (lịch sử xem) hay chưa
+                                        $seen = $conn->query("SELECT * FROM history WHERE user_id = '{$users["id"]}' AND course_id = '{$lession["id"]}'");
+                                        $has_view = $seen->num_rows > 0; // trả về true hoặc false
+                                    } else {
+                                        $has_view = false;
+                                    }
                                     ?>
                                     <div class="menu-item">
                                         <a class="menu-link active" href="?category=<?php echo $_GET["category"]; ?>&courseId=<?php echo $lession["id"]; ?>">
                                             <span class="menu-bullet">
-                                                <i class="fa fa-circle text-danger"></i>
+                                                <!--text-success là màu xanh, text-danger là màu đỏ-->
+                                                <!--Nếu đã xem thì icon sẽ đổi sang màu xanh và ngược lại-->
+                                                <i class="fa fa-circle <?php echo ($has_view) ? "text-success" : "text-danger"; ?>"></i>
                                             </span>
                                             <span class="menu-title"><?php echo $lession["name"]; ?></span>
                                         </a>
@@ -211,7 +239,7 @@ if (!isset($_GET["category"])) {
                             </span>
                         </a>
                     <?php } else { ?>
-                        <a href="login.php" class="btn btn-flex flex-center btn-danger overflow-hidden text-nowrap px-0 h-40px w-100">
+                        <a href="handler/logout.php" class="btn btn-flex flex-center btn-danger overflow-hidden text-nowrap px-0 h-40px w-100">
                             <span class="btn-label">
                                 Đăng xuất
                             </span>
